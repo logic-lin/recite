@@ -1,0 +1,4 @@
+var split = function (str, seg) {
+  return str.split(seg)
+}
+module.exports.split = split;

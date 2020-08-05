@@ -1,0 +1,43 @@
+<wxs src='cut.wxs' module='tools'/>
+
+<view class="header">
+  <text>列表：</text>
+  <input type='number' bindinput="listchange" maxlength="2" value="1"></input>
+  <view bindtap="getList" class="get">获取</view>
+  <view bindtap="change_mode" style="background-color:#33cccc" wx:if="{{check_list.length}}">切换模式</view>
+</view>
+
+<slider bindchanging="sliderchange" value="40" show-value/>
+<view class="important" bindtap="sign" style="{{'background-color:'+(tools.split(list[index],'|')[1] == null?'#67e667':'#ff4040')}}">{{tools.split(list[index],'|')[1] == null?'标为重点':'已标记'}}</view>
+
+<view style="background-color:pink;text-align: center;color:white">{{index+1+'/'+list.length}}</view>
+<view class="container">
+  <scroll-view class="list" scroll-x scroll-y>
+  <!-- <view><image src="http://120.25.204.153/List/List6/55-2.jpg" mode="widthFix" style="{{'width:'+width+'%'}}"></image></view> -->
+  <view><image src="{{list.length?'http://120.25.204.153/List/List'+list_index+'/'+tools.split(list[index],'|')[0]+'?v=2':''}}" mode="widthFix" style="{{'width:'+width+'%'}}" class="img"></image></view>
+  </scroll-view>
+</view>
+
+
+<scroll-view class="but" style="{{'opacity:'+opacity}}" wx:if="{{!is_trans}}" scroll-y>
+  <view bindtap="last" bindlongtap="toHead" style="background-color:#ffcc73">last</view>
+  <view bindtap="next" bindlongtap="toEnd" style="background-color:#ffcc73">next</view>
+  <view bindtap="know" style="background-color:#67e667">认识</view>
+  <view bindlongtap="pass" style="background-color:green">(长按)斩</view>
+  <view bindtap="wrong" style="background-color:red">错误页面</view>
+  <view bindtap="trans" style="background-color:#33cccc">查找翻译</view>
+  
+</scroll-view>
+
+<view class="translate" wx:else>
+  <view class="header">
+    <input bindinput="input_word" value="{{check_word}}"></input>
+    <view bindtap="translate" style="background-color:#33cccc;width:20%">查找</view>
+    <view bindtap="trans" style="background-color:#33cccc;width:20%">返回</view>
+  </view>
+  <scroll-view class="translation" scroll-x scroll-y>
+    <view wx:for="{{translation}}">{{item}}</view>
+    <view wx:if="{{!translation.length}}">~暂无结果~</view>
+  </scroll-view>
+</view>
+

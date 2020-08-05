@@ -1,0 +1,39 @@
+
+<scroll-view class="list" scroll-y = "true">
+  <view class="tip" wx:if="{{list.length < 1}}">~暂无内容~</view>
+  <view class="item" wx:for="{{list}}" bindlongtap="change" data-index = "{{index}}" style="{{item.rest < 0?'background-color:orange':''}}">
+    <view class="header">
+      <text class="num">{{list.length-index}}<text style="font-size:30rpx;line-height:36rpx">{{item.do_time == today ? '(今日要做的任务)':''}}</text></text>
+      <text class="do_time">do:{{item.do_time}}</text>
+    </view>
+    <text class="content">{{item.content}}</text>
+    <text class="ddl">DDL:{{item.ddl}}（{{item.rest > 0 ? '距离结束还有'+item.rest+'天' : item.rest == 0 ?'今日结束':'已结束'}}）</text>
+    <view class="change_con" wx:if="{{change == index}}">
+      <view class="change" data-index = "{{index}}" bindtap="query">修改</view>
+      <view class="cancel" data-index = "{{index}}" bindtap="cancel">取消</view>
+      <view class="delete" data-index = "{{index}}" bindtap="del">删除</view>
+    </view>
+  </view>
+</scroll-view>
+
+<view class="but menu" bindtap="menu"></view>
+<view class="but edit" bindtap="edit" wx:if="{{menu}}">{{open?'关闭':'编辑'}}</view>
+<view class="but commit" bindtap="commit" wx:if="{{open}}">提交</view>
+<view class="but sort"bindtap="sorted" wx:if="{{menu}}">切换</view>
+<view class="but upload"bindtap="upload" wx:if="{{menu}}">上传</view>
+<view class="but download"bindtap="download" wx:if="{{menu}}">获取</view>
+<navigator class="but word" wx:if="{{menu}}" url="../cut/cut">单词</navigator>
+<view class="back" wx:if="{{open}}" catchtouchmove="ture">
+
+  <view class="open">
+    <view>
+      <text>内容：</text><textarea placeholder="请输入内容" data-key="content" bindinput="inputed" value = "{{commit.content}}" maxlength='-1'></textarea>
+    </view>
+    <view>
+      <text>执行时间：</text><picker mode="date" bindchange="inputed" data-key="do_time"><input placeholder="请选择执行时间" value = "{{commit.do_time}}" disabled></input></picker>
+    </view>
+    <view>
+      <text>DDL：</text><picker mode="date" bindchange="inputed" data-key="ddl"><input placeholder="请选择DDL" value = "{{commit.ddl}}" disabled></input></picker>
+    </view>
+  </view>
+</view>
